@@ -16,27 +16,25 @@
  */
 package org.jboss.quickstarts.ws.client;
 
-import org.jboss.quickstarts.ws.jaxws.samples.jsr181pojo.JSEBean01;
+import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
-import java.lang.System;
-import java.net.URL;
+
+import org.jboss.quickstarts.ws.jaxws.samples.jsr181pojo.JSEBean;
 
 /**
- *
  * @author rsearls@redhat.com
  */
 public class Client {
 
-    public static void main(String[] args)
-    {
-        String endPointAddress = "http://localhost:8080/wildfly-jaxws-pojo-endpoint/JSEBean01";
-        QName serviceName = new QName("http://jsr181pojo.samples.jaxws.ws.quickstarts.jboss.org/", "JSEBean01Service");
+    public static void main(String[] args) {
+        String endPointAddress = "http://localhost:8080/jaxws-pojo-endpoint/JSEBean";
+        QName serviceName = new QName("http://jsr181pojo.samples.jaxws.ws.quickstarts.jboss.org/", "JSEBeanService");
 
         try {
             URL wsdlURL = new URL(endPointAddress + "?wsdl");
             Service service = Service.create(wsdlURL, serviceName);
-            JSEBean01 proxy = service.getPort(JSEBean01.class);
+            JSEBean proxy = service.getPort(JSEBean.class);
             System.out.println(proxy.echo("pojoClient calling"));
         } catch (Exception e) {
             System.out.println(e);

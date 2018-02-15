@@ -1,11 +1,11 @@
 kitchensink-utjs-angular: Example using Undertow.js with Mutache templates
 ==========================================================================
-Author: Stuart Douglas
-Level: Intermediate
-Technologies: Undertow.js, Mustache
-Summary: Based on kitchensink, but uses Mustache for the front end and Undertow.js for the back end
-Target Project: WildFly
-Source: <https://github.com/wildfly/quickstart/>
+Author: Stuart Douglas  
+Level: Intermediate  
+Technologies: Undertow.js, Mustache  
+Summary: Based on kitchensink, but uses Mustache for the front end and Undertow.js for the back end.  
+Target Project: WildFly  
+Source: <${github.repo.url}>
 
 What is it?
 -----------
@@ -17,11 +17,10 @@ This project is 100% JavaScript, it does not contain any Java code.
 System requirements
 -------------------
 
-All you need to build this project is Java 8.0 (Java SDK 1.8) or better, Maven 3.1 or better.
+The application this project produces is designed to be run on ${product.name.full} ${product.version} or later.
 
-The application this project produces is designed to be run on JBoss WildFly 10+.
+All you need to build this project is ${build.requirements}. See [Configure Maven for ${product.name} ${product.version}](https://github.com/jboss-developer/jboss-developer-shared-resources/blob/master/guides/CONFIGURE_MAVEN_JBOSS_EAP7.md#configure-maven-to-build-and-deploy-the-quickstarts) to make sure you are configured correctly for testing the quickstarts.
 
- 
 Configure Maven
 ---------------
 
@@ -49,12 +48,12 @@ _NOTE: The following build command assumes you have configured your Maven user s
 
         mvn clean package wildfly:deploy
 
-4. This will deploy `target/wildfly-kitchensink-jsp.war` to the running instance of the server.
+4. This will deploy `target/${project.artifactId}.war` to the running instance of the server.
 
 Access the application 
 ---------------------
 
-The application will be running at the following URL: <http://localhost:8080/wildfly-kitchensink-utjs-mustache/>.
+The application will be running at the following URL: <http://localhost:8080/${project.artifactId}/>.
 
 
 Undeploy the Archive

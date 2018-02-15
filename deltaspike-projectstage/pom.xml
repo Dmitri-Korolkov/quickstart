@@ -15,13 +15,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<project  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.wildfly.quickstarts</groupId>
-        <artifactId>wildfly-quickstart-parent</artifactId>
-        <version>10.0.0-SNAPSHOT</version>
+        <artifactId>quickstart-parent</artifactId>
+        <version>11.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>wildfly-deltaspike-projectstage</artifactId>
@@ -39,9 +38,6 @@
     </licenses>
 
     <properties>
-        <!-- JBoss dependency versions -->
-
-        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
 
         <!-- maven-compiler-plugin -->
         <maven.compiler.target>1.8</maven.compiler.target>

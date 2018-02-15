@@ -26,7 +26,7 @@ import javax.naming.NamingException;
 import java.util.Hashtable;
 
 /**
- * A sample program which acts a remote client for a EJB deployed on AS7 server. This program shows how to lookup stateful and
+ * A sample program which acts a remote client for a EJB deployed on JBoss EAP server. This program shows how to lookup stateful and
  * stateless beans via JNDI and then invoke on them
  *
  * @author Jaikiran Pai
@@ -107,7 +107,8 @@ public class RemoteEJBClient {
      */
     private static RemoteCalculator lookupRemoteStatelessCalculator() throws NamingException {
         final Hashtable<String, String> jndiProperties = new Hashtable<>();
-        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+        jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
+        jndiProperties.put(Context.PROVIDER_URL,"remote+http://localhost:8080");
         final Context context = new InitialContext(jndiProperties);
 
         // The JNDI lookup name for a stateless session bean has the syntax of:
@@ -120,7 +121,7 @@ public class RemoteEJBClient {
         // <moduleName> By the default the module name is the name of the EJB JAR file (without the
         // .jar suffix). The module name might be overridden in the ejb-jar.xml
         //
-        // <distinctName> : WildFly allows each deployment to have an (optional) distinct name.
+        // <distinctName> : EAP allows each deployment to have an (optional) distinct name.
         // This example does not use this so leave it blank.
         //
         // <beanName> : The name of the session been to be invoked.
@@ -129,7 +130,7 @@ public class RemoteEJBClient {
         // the whole package name.
 
         // let's do the lookup
-        return (RemoteCalculator) context.lookup("ejb:/wildfly-ejb-remote-server-side/CalculatorBean!"
+        return (RemoteCalculator) context.lookup("ejb:/ejb-remote-server-side/CalculatorBean!"
             + RemoteCalculator.class.getName());
     }
 
@@ -141,7 +142,9 @@ public class RemoteEJBClient {
      */
     private static RemoteCounter lookupRemoteStatefulCounter() throws NamingException {
         final Hashtable<String, String> jndiProperties = new Hashtable<>();
-        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+        //jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+        jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
+        jndiProperties.put(Context.PROVIDER_URL,"remote+http://localhost:8080");
         final Context context = new InitialContext(jndiProperties);
 
         // The JNDI lookup name for a stateful session bean has the syntax of:
@@ -154,7 +157,7 @@ public class RemoteEJBClient {
         // <moduleName> By the default the module name is the name of the EJB JAR file (without the
         // .jar suffix). The module name might be overridden in the ejb-jar.xml
         //
-        // <distinctName> : WildFly allows each deployment to have an (optional) distinct name.
+        // <distinctName> : EAP allows each deployment to have an (optional) distinct name.
         // This example does not use this so leave it blank.
         //
         // <beanName> : The name of the session been to be invoked.
@@ -163,7 +166,7 @@ public class RemoteEJBClient {
         // the whole package name.
 
         // let's do the lookup
-        return (RemoteCounter) context.lookup("ejb:/wildfly-ejb-remote-server-side/CounterBean!"
+        return (RemoteCounter) context.lookup("ejb:/ejb-remote-server-side/CounterBean!"
             + RemoteCounter.class.getName() + "?stateful");
     }
 }

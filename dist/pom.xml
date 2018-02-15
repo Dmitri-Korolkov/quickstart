@@ -15,22 +15,21 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.jboss</groupId>
-        <artifactId>jboss-parent</artifactId>
-        <version>6-beta-2</version>
-        <relativePath/>
+        <groupId>org.wildfly.quickstarts</groupId>
+        <artifactId>quickstart-parent</artifactId>
+        <version>11.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
-    <groupId>org.wildfly.quickstarts</groupId>
-    <artifactId>wildfly-quickstarts-dist</artifactId>
-    <version>10.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>WildFly Quickstarts Distribution</name>
-    <description>WildFly Quickstarts Distribution</description>
-    <url>http://www.wildfly.org</url>
 
+    <artifactId>quickstarts-dist</artifactId>
+    <packaging>pom</packaging>
+    <name>Quickstarts Distribution</name>
+    <description>Quickstarts Distribution</description>
+    
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -38,11 +37,13 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
         </license>
     </licenses>
-
     <build>
+        <finalName>wildfly-${project.version}</finalName>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <version>${version.assembly.plugin}</version>
                 <executions>
                     <execution>
                         <id>distribution</id>
@@ -54,12 +55,11 @@
                             <descriptors>
                                 <descriptor>src/main/assembly/assembly.xml</descriptor>
                             </descriptors>
-                            <finalName>wildfly-quickstarts-${project.version}</finalName>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
+   
 </project>

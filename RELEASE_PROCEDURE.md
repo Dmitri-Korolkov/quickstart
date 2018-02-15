@@ -4,13 +4,13 @@ Quickstarts Release Procedure
 Testing the quickstarts
 -----------------------
 
-  Most of the quickstarts require JBoss WildFly only in standalone mode. Some require the "standalone-full" profile, some require XTS, some require Postgres and some require other quickstarts to be deployed. Profiles are used in the root POM to separate out these groups, allowing you to test the quickstarts easily. For example, to run those that require only standalone mode:
+  Most of the quickstarts require starting ${product.name.full} in standalone mode. Some require the "standalone-full" profile, some require XTS, some require Postgres and some require other quickstarts to be deployed. Profiles are used in the root POM to separate out these groups, allowing you to test the quickstarts easily. For example, to run those that require only standalone mode:
 
-      mvn clean install wildfly:deploy wildfly:undeploy -Parq-wildfly-remote -P-requires-postgres,-requires-full,-complex-dependencies,-requires-xts
+      mvn clean verify wildfly:deploy wildfly:undeploy -Parq-remote -P-requires-postgres,-requires-full,-complex-dependencies,-requires-xts
 
   Or, to run those only those quickstarts that require the full profile
 
-      mvn clean install wildfly:deploy wildfly:undeploy -Parq-wildfly-remote -P-requires-postgres,-default,-complex-dependencies,-requires-xts
+      mvn clean verify wildfly:deploy wildfly:undeploy -Parq-remote -P-requires-postgres,-default,-complex-dependencies,-requires-xts
 
   And so on.
 
@@ -34,25 +34,20 @@ Quickstarts in other repositories
 Rendering Markdown
 ------------------
 
-  The quickstarts use Redcarpet to process the markdown, the same processor used by GitHub. This builds on the basic markdown syntax, adding support for tables, code highlighting, relaxed code blocks etc). We add a couple of custom piece of markup - \[TOC\] which allows a table of contents, based on headings, to be added to any file, and [Quickstart-TOC], which adds in a table listing the quickstarts.
+  The quickstarts use flexmark maven plugin to process the markdown. This builds on the basic markdown syntax, adding support for tables, code highlighting, relaxed code blocks etc). We add a couple of custom piece of markup - \[TOC\] which allows a table of contents, based on headings, to be added to any file, and [Quickstart-TOC], which adds in a table listing the quickstarts.
+    
+Just run
 
-  To render the quickstarts README's you will need, a working Ruby and Python install, with the various gems and eggs set up. 
-
-  To setup the environment you need to follow these steps. *Certify to use the correct versions*.
-
-1. Install Ruby *1.9.X*
-
-    For RHEL you can use this [spec](https://github.com/lnxchk/ruby-1.9.3-rpm)
-
-2. Install Ruby GEMs
-
-        gem install redcarpet nokogiri pygments.rb
-
-Then just run
-
-        ./dist/release-utils.sh -m
+        mvn generate-resources -Pdocs
 
   To render all markdown files to HTML.
+
+To do proper release with zip file &  all markdown files with resolved variables and rendered html files, run
+
+        mvn clean install -Drelease
+
+Which will also result in zip with all quickstarts in dist/target
+
 
 Publishing builds to Maven
 --------------------------

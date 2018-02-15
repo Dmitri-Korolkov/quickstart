@@ -21,8 +21,13 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
-import javax.ejb.*;
-import javax.interceptor.InvocationContext;
+import javax.ejb.ScheduleExpression;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.ejb.Timeout;
+import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
+import javax.ejb.TimerService;
 
 /**
  * Demonstrates how to use the EJB's @Timeout.
@@ -44,7 +49,7 @@ public class TimeoutExample {
     }
 
     @PostConstruct
-    public void initialize(InvocationContext ctx) {
+    public void initialize() {
         ScheduleExpression se = new ScheduleExpression();
         // Set schedule to every 3 seconds (starting at second 0 of every minute).
         se.hour("*").minute("*").second("0/3");

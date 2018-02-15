@@ -1,29 +1,28 @@
-wsba-participant-completion-simple: Deployment of a WS-BA enabled JAX-WS Web Service
-====================================================================================
+# wsba-participant-completion-simple: Deployment of a WS-BA enabled JAX-WS Web Service
+
 Author: Paul Robinson  
 Level: Intermediate  
 Technologies: WS-BA, JAX-WS  
 Summary: The `wsba-participant-completion-simple` quickstart deploys a WS-BA (WS Business Activity) enabled JAX-WS Web service WAR (ParticipantCompletion Protocol).  
-Target Product: WildFly  
-Source: <https://github.com/wildfly/quickstart/>  
+Target Product: ${product.name}  
+Source: <${github.repo.url}>  
 
-What is it?
------------
+## What is it?
 
-The `wsba-participant-completion-simple` quickstart demonstrates the deployment of a WS-BA (WS Business Activity) enabled JAX-WS Web service bundled in a WAR archive (ParticipantCompletion Protocol) for deployment to Red Hat JBoss Enterprise Application Platform.
+The `wsba-participant-completion-simple` quickstart demonstrates the deployment of a WS-BA (WS Business Activity) enabled JAX-WS Web service bundled in a WAR archive (ParticipantCompletion Protocol) for deployment to ${product.name.full}.
 
 The Web service exposes a simple 'set' collection as a service. The Service allows items to be added to the set within a Business Activity.
 
 The example demonstrates the basics of implementing a WS-BA enabled Web service. It is beyond the scope of this quickstart to demonstrate more advanced features. In particular
 
-1. The Service does not implement the required hooks to support recovery in the presence of failures.
-2. It also does not utilize a transactional back end resource.
-3. Only one Web service participates in the protocol. As WS-BA is a coordination protocol, it is best suited to multi-participant scenarios.
+* The Service does not implement the required hooks to support recovery in the presence of failures.
+* It also does not utilize a transactional back-end resource.
+* Only one web service participates in the protocol. As WS-BA is a coordination protocol, it is best suited to multi-participant scenarios.
 
-For a more complete example, please see the XTS demonstrator application that ships with the JBossTS project: http://www.jboss.org/jbosstm.
+For a more complete example, please see the XTS demonstrator application that ships with the Narayana project: http://narayana.io.
 
 It is also assumed tht you have an understanding of WS-BusinessActivity. For more details, read the XTS documentation
-that ships with the JBossTS project, which can be downloaded here: http://www.jboss.org/jbosstm/downloads/JBOSSTS_4_16_0_Final
+that ships with the Narayana project: http://narayana.io/docs/product
 
 The application consists of a single JAX-WS web service that is deployed within a WAR archive. It is tested with a JBoss
 Arquillian enabled JUnit test.
@@ -42,42 +41,39 @@ following steps occur:
 9. Providing the above steps where successful, the service notifies the coordinator that it has completed. The service has now made its changes visible and is not holding any locks. Allowing the service to notify completion is an optimisation that prevents the holding of locks, whilst waiting for other participants to complete. This notification is required as the Service participates in the `ParticipantCompletion` protocol.
 10. The client can then decide to complete or cancel the BA. If the client decides to complete, all participants will be told to close. If the participant decides to cancel, all participants will be told to compensate.
 
-There are other tests that show:
+There are additional tests that show:
 
 * What happens when an application exception is thrown by the service.
 * How the client can cancel a BA.
 
 
-System requirements
--------------------
+## System Requirements
 
-The application this project produces is designed to be run on Red Hat JBoss Enterprise Application Platform 7 or later. 
+The application this project produces is designed to be run on ${product.name.full} ${product.version} or later.
 
-All you need to build this project is Java 8.0 (Java SDK 1.8) or later and Maven 3.1.1 or later. See [Configure Maven for WildFly 10](https://github.com/jboss-developer/jboss-developer-shared-resources/blob/master/guides/CONFIGURE_MAVEN_JBOSS_EAP7.md#configure-maven-to-build-and-deploy-the-quickstarts) to make sure you are configured correctly for testing the quickstarts.
+All you need to build this project is ${build.requirements}. See [Configure Maven for ${product.name} ${product.version}](https://github.com/jboss-developer/jboss-developer-shared-resources/blob/master/guides/CONFIGURE_MAVEN_JBOSS_EAP7.md#configure-maven-to-build-and-deploy-the-quickstarts) to make sure you are configured correctly for testing the quickstarts.
 
 
-Start the WildFly Server
-----------------------
+## Start the Server
 
-Next you need to start WildFly with the XTS subsystem enabled. This is enabled through the optional server configuration *standalone-xts.xml*. To do this, run the following commands from the top-level directory of WildFly:
+Next you need to start ${product.name} with the XTS subsystem enabled. This is enabled through the optional server configuration *standalone-xts.xml*. To do this, run the following commands from the top-level directory of ${product.name}:
 
-        For Linux:     ./bin/standalone.sh --server-config=../../docs/examples/configs/standalone-xts.xml | egrep "started|stdout"
-        For Windows:   \bin\standalone.bat --server-config=..\..\docs\examples\configs\standalone-xts.xml | egrep "started|stdout"
+    For Linux:     ./bin/standalone.sh --server-config=../../docs/examples/configs/standalone-xts.xml | egrep "started|stdout"
+    For Windows:   \bin\standalone.bat --server-config=..\..\docs\examples\configs\standalone-xts.xml | egrep "started|stdout"
 
 
 Note, the pipe to egrep (| egrep "started|stdout") is useful to just show when the server has started and the output from these tests. For normal operation, this pipe can be removed.
 
 
-Run the Arquillian Tests 
--------------------------
+## Run the Arquillian Tests
 
-This quickstart provides Arquillian tests. By default, these tests are configured to be skipped as Arquillian tests require the use of a container. 
+This quickstart provides Arquillian tests. By default, these tests are configured to be skipped as Arquillian tests require the use of a container.
 
-1. Make sure you have started the WildFly server as described above.
+1. Make sure you have started the ${product.name} server as described above.
 2. Open a command prompt and navigate to the root directory of this quickstart.
 3. Type the following command to run the test goal with the following profile activated:
 
-        mvn clean test -Parq-wildfly-remote 
+        mvn clean verify -Parq-remote
 
 4. You should see the following result.
 
@@ -87,78 +83,77 @@ This quickstart provides Arquillian tests. By default, these tests are configure
 
 _Note: You see the following warning when you run the Arquillian tests in remote mode._
 
-      WARNING: Configuration contain properties not supported by the backing object org.jboss.as.arquillian.container.remote.RemoteContainerConfiguration
-      Unused property entries: {serverConfig=../../docs/examples/configs/standalone-xts.xml}
-      Supported property names: [managementAddress, password, managementPort, managementProtocol, username]
+    WARNING: Configuration contain properties not supported by the backing object org.jboss.as.arquillian.container.remote.RemoteContainerConfiguration
+    Unused property entries: {serverConfig=../../docs/examples/configs/standalone-xts.xml}
+    Supported property names: [managementAddress, password, managementPort, managementProtocol, username]
 
 _This is because, in remote mode, you are responsible for starting the server with the XTS subsystem enabled. When you run the Arquillian tests in managed mode, the container uses the `serverConfig` property defined in the `arquillian.xml` file to start the server with the XTS subsystem enabled._
 
+You can also let Arquillian manage the ${product.name} server by using the `arq-managed` profile. For more information about how to run the Arquillian tests, see [Run the Arquillian Tests](https://github.com/jboss-developer/jboss-developer-shared-resources/blob/master/guides/RUN_ARQUILLIAN_TESTS.md#run-the-arquillian-tests).
 
-Investigate the Server Log
-----------------------------
+
+## Investigate the Server Log
 
 The following messages should appear in the server log. Note there may be other log messages interlaced between these. The messages trace the steps taken by the tests.
 
 
 Test success:
 
-    11:41:02,386 INFO  [stdout] (management-handler-threads - 6) Starting 'testSuccess'. This test invokes a WS within a BA. The BA is later closed, which causes the WS call to complete successfully.
-    11:41:02,386 INFO  [stdout] (management-handler-threads - 6) [CLIENT] Creating a new Business Activity
-    11:41:02,386 INFO  [stdout] (management-handler-threads - 6) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA wil be included in this activity)
-    11:41:02,927 INFO  [stdout] (management-handler-threads - 6) [CLIENT] invoking addValueToSet(1) on WS
-    11:41:03,233 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] invoked addValueToSet('1')
-    11:41:03,233 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Enlisting a participant into the BA
-    11:41:03,336 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Invoking the back-end business logic
-    11:41:03,336 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Prepare the backend resource and if successful notify the coordinator that we have completed our work
-    11:41:03,337 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Prepare successful, notifying coordinator of completion
-    11:41:03,660 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) SetParticipantBA.confirmCompleted('true')
-    11:41:03,660 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Participant.confirmCompleted('true') (This tells the participant that compensation information has been logged and that it is safe to commit any changes.)
-    11:41:03,660 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Commit the backend resource (e.g. commit any changes to databases so that they are visible to others)
-    11:41:03,779 INFO  [stdout] (management-handler-threads - 6) [CLIENT] Closing Business Activity (This will cause the BA to complete successfully)
-    11:41:04,330 INFO  [stdout] (TaskWorker-2) [SERVICE] Participant.close (The participant knows that this BA is now finished and can throw away any temporary state)
+    INFO  [stdout] (management-handler-threads - 6) Starting 'testSuccess'. This test invokes a WS within a BA. The BA is later closed, which causes the WS call to complete successfully.
+    INFO  [stdout] (management-handler-threads - 6) [CLIENT] Creating a new Business Activity
+    INFO  [stdout] (management-handler-threads - 6) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA wil be included in this activity)
+    INFO  [stdout] (management-handler-threads - 6) [CLIENT] invoking addValueToSet(1) on WS
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] invoked addValueToSet('1')
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Enlisting a participant into the BA
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Invoking the back-end business logic
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Prepare the backend resource and if successful notify the coordinator that we have completed our work
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Prepare successful, notifying coordinator of completion
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Participant.confirmCompleted('true') (This tells the participant that compensation information has been logged and that it is safe to commit any changes.)
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Commit the backend resource (e.g. commit any changes to databases so that they are visible to others)
+    INFO  [stdout] (management-handler-threads - 6) [CLIENT] Closing Business Activity (This will cause the BA to complete successfully)
+    INFO  [stdout] (TaskWorker-2) [SERVICE] Participant.close (The participant knows that this BA is now finished and can throw away any temporary state)
 
 Test cancel:
 
-    11:41:04,721 INFO  [stdout] (management-handler-threads - 5) Starting 'testCancel'. This test invokes a WS within a BA. The BA is later cancelled, which causes these WS call to be compensated.
-    11:41:04,721 INFO  [stdout] (management-handler-threads - 5) [CLIENT] Creating a new Business Activity
-    11:41:04,721 INFO  [stdout] (management-handler-threads - 5) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA will be included in this activity)
-    11:41:04,781 INFO  [stdout] (management-handler-threads - 5) [CLIENT] invoking addValueToSet(1) on WS
-    11:41:05,133 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] invoked addValueToSet('1')
-    11:41:05,134 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Enlisting a participant into the BA
-    11:41:05,241 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Invoking the back-end business logic
-    11:41:05,242 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Prepare the backend resource and if successful notify the coordinator that we have completed our work
-    11:41:05,242 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Prepare successful, notifying coordinator of completion
-    11:41:05,305 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) SetParticipantBA.confirmCompleted('true')
-    11:41:05,305 INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Participant.confirmCompleted('true') (This tells the participant that compensation information has been logged and that it is safe to commit any changes.)
+    INFO  [stdout] (management-handler-threads - 5) Starting 'testCancel'. This test invokes a WS within a BA. The BA is later cancelled, which causes these WS call to be compensated.
+    INFO  [stdout] (management-handler-threads - 5) [CLIENT] Creating a new Business Activity
+    INFO  [stdout] (management-handler-threads - 5) [CLIENT] Beginning Business Activity (All calls to Web services that support WS-BA will be included in this activity)
+    INFO  [stdout] (management-handler-threads - 5) [CLIENT] invoking addValueToSet(1) on WS
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] invoked addValueToSet('1')
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Enlisting a participant into the BA
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Invoking the back-end business logic
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Prepare the backend resource and if successful notify the coordinator that we have completed our work
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Prepare successful, notifying coordinator of completion
+    INFO  [stdout] (http-localhost-127.0.0.1-8080-1) [SERVICE] Participant.confirmCompleted('true') (This tells the participant that compensation information has been logged and that it is safe to commit any changes.)
 
 
 
-Run the Quickstart in Red Hat JBoss Developer Studio or Eclipse
--------------------------------------
-You can also start the server and deploy the quickstarts or run the Arquillian tests from Eclipse using JBoss tools. For general information about how to import a quickstart, add a WildFly server, and build and deploy a quickstart, see [Use JBoss Developer Studio or Eclipse to Run the Quickstarts](https://github.com/jboss-developer/jboss-developer-shared-resources/blob/master/guides/USE_JBDS.md#use-jboss-developer-studio-or-eclipse-to-run-the-quickstarts) 
+## Run the Quickstart in Red Hat JBoss Developer Studio or Eclipse
 
-This quickstart is more complex than the others. It requires that you configure the WildFly server to use the *standalone-xts.xml* configuration file, which is located in an external configuration directory.
+You can also start the server and deploy the quickstarts or run the Arquillian tests from Eclipse using JBoss tools. For general information about how to import a quickstart, add a ${product.name} server, and build and deploy a quickstart, see [Use JBoss Developer Studio or Eclipse to Run the Quickstarts](${use.eclipse.url}).
 
-1. Import the quickstart into JBoss Developer Studio. 
-2. If you have not already done so, you must configure a new WildFly server to use the XTS configuration.
-   * In the `Server` tab, right-click and choose `New` --> `Server`.
-   * For the `Server name`, enter "WildFly XTS Configuration" and click `Next`.
-   * In the `Create a new Server Adapter` dialog, choose `Create a new runtime (next page)` and click `Next`.
-   * In the `JBoss Runtime` dialog, enter the following information and then click `Finish`.
-   
-            Name: WildFly XTS Runtime
+This quickstart is more complex than the others. It requires that you configure the ${product.name} server to use the *standalone-xts.xml* configuration file, which is located in an external configuration directory.
+
+1. Import the quickstart into JBoss Developer Studio.
+2. If you have not already done so, you must configure a new ${product.name} server to use the XTS configuration.
+     * In the `Server` tab, right-click and choose `New` --> `Server`.
+     * Under `Select the server type:`, expand `Red Hat JBoss Middleware` and choose `${jbds.eap.server.name}`.
+     * For the `Server name`, enter `${product.name} XTS Configuration` and click `Next`.
+     * In the `Create a new Server Adapter` dialog, choose `Create a new runtime (next page)` and click `Next`.
+     * In the `JBoss Runtime` dialog, enter the following information and then click `Finish`.
+
+            Name: ${product.name} XTS Runtime
             Home Directory: (Browse to the server directory and select it)
             Execution Environment: (Choose your runtime JRE if not correct)
             Configuration base directory: (This should already point to your server configuration directory)
             Configuration file: ../../docs/examples/configs/standalone-xts.xml
-3. Start the new `WildFly XTS Configuration` server. 
-4. Right-click on the `jboss-wsba-participant-completion-simple` project, choose `Run As` --> `Maven build`, enter "clean test -Parq-wildfly-remote" for the `Goals:`, and click `Run` to run the Arquillian tests. The test results appear in the console.
+
+3. Start the new `${product.name} XTS Configuration` server.
+4. Right-click on the `${project.artifactId}` project, choose `Run As` --> `Maven build`, enter `clean verify -Parq-remote` for the `Goals:`, and click `Run` to run the Arquillian tests. The test results appear in the console.
 
 
-Debug the Application
-------------------------------------
+## Debug the Application
 
 If you want to debug the source code of any library in the project, run the following command to pull the source into your local repository. The IDE should then detect it.
 
-        mvn dependency:sources
-
+    mvn dependency:sources
